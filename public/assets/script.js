@@ -1,31 +1,59 @@
+var actualFolder = "";
+
 $(document).ready(() => {
-  $.get('/read?url=/')
+  $.get("/api?url=/")
     .then((content) => {
-      $('#navigation').append(`<div class='folder' id='back'>
-      <i class="fa-solid fa-folder"></i>...\n</div>`);
-      content.forEach((folder) => {
-        $('#navigation').append(`<div class='folder'>
+      content.data.forEach((folder) => {
+        $("#navigation").append(`<div class='folder'>
         <i class="fa-solid fa-folder"></i>${folder}\n</div>`);
       });
     })
     .catch((err) => {
       alert(err);
     });
-  $(document).on('click', '.folder', (event) => {
-    const actualFolder = window.location.pathname;
+  $(document).on("click", ".folder", (event) => {
+    if (!actualFolder) actualFolder = window.location.pathname;
     const folder = $(event.target).text().trim();
-    $.post(`${actualFolder}${folder}`)
-      .then((res) => {
-        $('#navigation').text('');
-        $('#navigation').append(`<div class='folder' id='back'>
-        <i class="fa-solid fa-folder"></i>...\n</div>`);
-        res.forEach((folder) => {
-          $('#navigation').append(`<div class='folder'>
+    if (event.target.id == "back") {
+      let folderPath = actualFolder.slice(0, actualFolder.lastIndexOf("/") + 1);
+      $.get(`/api?url=${folderPath}`)
+        .then((res) => {
+          actualFolder = folderPath;
+          $("#navigation").text("");
+          if (actualFolder && actualFolder != "/") {
+            $("#navigation").append(`<div class='folder' id='back'>
+            <i class="fa-solid fa-folder"></i>...\n</div>`);
+          }
+          res.data.forEach((folder) => {
+            $("#navigation").append(`<div class='folder'>
           <i class="fa-solid fa-folder"></i>${folder}</div>`);
+          });
+        })
+        .catch((err) => {
+          alert(err);
         });
-      })
-      .catch((err) => {
-        alert(err);
-      });
+    } else {
+      $.get(`/api?url=${actualFolder}${folder}`)
+        .then((res) => {
+          if (res.type == "files") {
+            actualFolder = actualFolder + folder;
+            $("#navigation").text("");
+            if (actualFolder && actualFolder != "/") {
+              $("#navigation").append(`<div class='folder' id='back'>
+            <i class="fa-solid fa-folder"></i>...\n</div>`);
+            }
+            res.data.forEach((folder) => {
+              $("#navigation").append(`<div class='folder'>
+          <i class="fa-solid fa-folder"></i>${folder}</div>`);
+            });
+          } else {
+            $("#file").text("");
+            $("#file").append(res.data);
+          }
+        })
+        .catch((err) => {
+          alert(err);
+        });
+    }
   });
 });

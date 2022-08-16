@@ -1,8 +1,7 @@
-const express = require('express');
+const express = require("express");
 const router = express.Router();
-const service = require('../services/service');
+const service = require("../services/service");
 
-router.get('/read', service.readPath);
-router.get('/', service.renderPage);
+router.get("/", service.readPath);
 
 module.exports = router;
