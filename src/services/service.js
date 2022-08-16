@@ -1,4 +1,4 @@
-const controller = require('../controllers/controller');
+const controller = require("../controllers/controller");
 
 function readPath(req, res) {
   const { query } = req;
@@ -7,7 +7,4 @@ function readPath(req, res) {
   );
   res.send(pathContent);
 }
-function renderPage(req, res) {
-  res.render('index');
-}
-module.exports = { readPath, renderPage };
+module.exports = { readPath };
