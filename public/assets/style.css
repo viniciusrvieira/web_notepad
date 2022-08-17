@@ -1,28 +1,80 @@
+@import url('https://fonts.googleapis.com/css2?family=Poppins:ital,wght@0,100;0,200;0,300;0,400;0,500;0,600;0,700;0,800;0,900;1,100;1,200;1,300;1,400;1,500;1,600;1,700;1,800;1,900&display=swap');
+
+:root {
+  --red: #ff605c;
+  --main-font: 'Poppins';
+}
+* {
+  font-family: var(--main-font);
+  color: #4b4b4b;
+}
 section {
   display: flex;
   height: 100vh;
+  width: 100vw;
+  justify-content: space-between;
+}
+::-webkit-scrollbar {
+  width: 12px;
+  background-color: transparent;
+}
+::-webkit-scrollbar-thumb {
+  border-radius: 10px;
+  background-color: #b4b4b4;
 }
 .fa-solid {
   margin-right: 10px;
 }
 #navigation {
   width: 100%;
-  background-color: white;
-  border: 1px solid black;
-  margin: 10px;
+  background-color: #f2f2f2;
   padding: 10px;
-  overflow: scroll;
+  overflow: auto;
   overflow-x: hidden;
 }
 #file {
+  display: none;
+  flex-direction: column;
   width: 100%;
   background-color: lightgray;
-  padding: 10px;
+}
+#header {
+  background-color: white;
+  padding: 5px 10px;
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+}
+#close {
+  height: 16px;
+  width: 16px;
+  background-color: var(--red);
+  border-radius: 50%;
+  transition: 250ms;
+}
+#close:hover {
+  border: solid 1.5px darkred;
+  cursor: pointer;
+}
+#content {
+  height: 100%;
+  padding: 20px;
+  overflow: scroll;
+  overflow-x: hidden;
+  word-break: break-word;
 }
 .folder {
   padding: 5px;
 }
-.folder:hover {
+.folder:hover,
+.folder:hover i {
   cursor: pointer;
-  background-color: lightskyblue;
+  color: white;
+  background-color: #9b9b9b;
+}
+.swal2-confirm {
+  background-color: var(--red) !important;
+}
+.swal2-confirm:focus {
+  box-shadow: none !important;
 }
