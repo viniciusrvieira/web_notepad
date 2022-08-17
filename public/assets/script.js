@@ -1,59 +1,88 @@
-var actualFolder = "";
+var actualFolder = '';
 
 $(document).ready(() => {
-  $.get("/api?url=/")
+  $.get('/api?url=/')
     .then((content) => {
       content.data.forEach((folder) => {
-        $("#navigation").append(`<div class='folder'>
-        <i class="fa-solid fa-folder"></i>${folder}\n</div>`);
+        addFolderToNav(folder);
       });
     })
     .catch((err) => {
       alert(err);
     });
-  $(document).on("click", ".folder", (event) => {
+  $(document).on('click', '.folder', (event) => {
     if (!actualFolder) actualFolder = window.location.pathname;
     const folder = $(event.target).text().trim();
-    if (event.target.id == "back") {
-      let folderPath = actualFolder.slice(0, actualFolder.lastIndexOf("/") + 1);
+    if (event.target.id == 'back') {
+      let folderPath = actualFolder.slice(0, actualFolder.lastIndexOf('/'));
+      if (!folderPath) folderPath = '/';
+      $('#file').css('display', 'none');
       $.get(`/api?url=${folderPath}`)
         .then((res) => {
           actualFolder = folderPath;
-          $("#navigation").text("");
-          if (actualFolder && actualFolder != "/") {
-            $("#navigation").append(`<div class='folder' id='back'>
-            <i class="fa-solid fa-folder"></i>...\n</div>`);
+          $('#navigation').text('');
+          if (actualFolder && actualFolder != '/') {
+            addBackButtonToNav();
           }
           res.data.forEach((folder) => {
-            $("#navigation").append(`<div class='folder'>
-          <i class="fa-solid fa-folder"></i>${folder}</div>`);
+            addFolderToNav(folder);
           });
         })
         .catch((err) => {
-          alert(err);
+          Swal.fire({
+            icon: 'error',
+            title: 'Ops...',
+            text: 'Ocorreu um erro interno, tente recarregar a página.',
+          });
         });
     } else {
-      $.get(`/api?url=${actualFolder}${folder}`)
+      $.get(`/api?url=${actualFolder}/${folder}`)
         .then((res) => {
-          if (res.type == "files") {
-            actualFolder = actualFolder + folder;
-            $("#navigation").text("");
-            if (actualFolder && actualFolder != "/") {
-              $("#navigation").append(`<div class='folder' id='back'>
-            <i class="fa-solid fa-folder"></i>...\n</div>`);
+          if (res.type == 'files') {
+            closeFile();
+            actualFolder =
+              actualFolder == '/'
+                ? `${actualFolder}${folder}`
+                : `${actualFolder}/${folder}`;
+            $('#navigation').text('');
+            if (actualFolder && actualFolder != '/') {
+              addBackButtonToNav();
             }
             res.data.forEach((folder) => {
-              $("#navigation").append(`<div class='folder'>
-          <i class="fa-solid fa-folder"></i>${folder}</div>`);
+              addFolderToNav(folder);
             });
-          } else {
-            $("#file").text("");
-            $("#file").append(res.data);
+          } else if (res.type == 'text') {
+            openFile({ name: folder, content: res.data });
+          } else if (res.code == 401) {
+            Swal.fire({
+              icon: 'error',
+              title: 'Não autorizado',
+              text: 'O acesso ao diretório requisitado não foi permitido.',
+            });
+          } else if (res.code == 404) {
+            Swal.fire({
+              icon: 'error',
+              title: 'Não encontrado',
+              text: 'O diretório que você tentou acessar não existe.',
+            });
+          } else if (res.code == 409) {
+            Swal.fire({
+              icon: 'error',
+              title: 'Ocupado',
+              text: 'O diretório que você tentou acessar já está em uso.',
+            });
           }
         })
         .catch((err) => {
-          alert(err);
+          Swal.fire({
+            icon: 'error',
+            title: 'Ops...',
+            text: 'Ocorreu um erro interno, tente recarregar a página.',
+          });
         });
     }
+  });
+  $('#close').on('click', () => {
+    closeFile();
   });
 });
