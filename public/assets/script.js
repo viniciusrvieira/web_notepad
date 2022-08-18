@@ -3,8 +3,9 @@ var actualFile = '';
 $(document).ready(() => {
   $.get('/api?url=/')
     .then((response) => {
-      response.data.content.forEach((file) => {
-        addFileToNav(file);
+      updatePath('/');
+      response.data.items.forEach((file) => {
+        addItemToNav(file);
       });
     })
     .catch(() => {
@@ -24,12 +25,13 @@ $(document).ready(() => {
       $.get(`/api?url=${filePath}`)
         .then((response) => {
           actualFile = filePath;
-          $('#navigation').text('');
+          updatePath(actualFile);
+          $('#navigation-content').text('');
           if (actualFile && actualFile != '/') {
             addBackButtonToNav();
           }
-          response.data.content.forEach((file) => {
-            addFileToNav(file);
+          response.data.items.forEach((file) => {
+            addItemToNav(file);
           });
         })
         .catch(() => {
@@ -40,22 +42,24 @@ $(document).ready(() => {
           });
         });
     } else {
-      $.get(`/api?url=${actualFile}/${file}`)
+      let url = actualFile == '/' ? `/${file}` : `${actualFile}/${file}`;
+      $.get(`/api?url=${url}`)
         .then((response) => {
           if (response.data) {
             switch (response.data.kind) {
               case 'files':
+                updatePath(url);
                 closeFile();
                 actualFile =
                   actualFile == '/'
                     ? `${actualFile}${file}`
                     : `${actualFile}/${file}`;
-                $('#navigation').text('');
+                $('#navigation-content').text('');
                 if (actualFile && actualFile != '/') {
                   addBackButtonToNav();
                 }
-                response.data.content.forEach((file) => {
-                  addFileToNav(file);
+                response.data.items.forEach((file) => {
+                  addItemToNav(file);
                 });
                 break;
               case 'text':
