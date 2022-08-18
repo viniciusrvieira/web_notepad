@@ -5,22 +5,31 @@ function readPath(path) {
     let stat = fs.lstatSync(decodeURI(path));
     if (stat.isFile())
       return {
-        code: 200,
-        codeStatus: 'OK',
-        type: 'text',
-        data: fs.readFileSync(path, 'utf-8'),
+        data: {
+          kind: 'text',
+          charset: 'utf-8',
+          content: fs.readFileSync(path, 'utf-8'),
+        },
       };
     return {
-      code: 200,
-      codeStatus: 'OK',
-      type: 'files',
-      data: fs.readdirSync(path),
+      data: {
+        kind: 'files',
+        content: fs.readdirSync(path),
+      },
     };
   } catch (err) {
-    if (err.code == 'EPERM') return { code: 401, codeStatus: 'Unauthorized' };
-    if (err.code == 'ENOINT') return { code: 404, codeStatus: 'Not Found' };
-    if (err.code == 'EBUSY') return { code: 409, codeStatus: 'Conflict' };
-    console.log(err);
+    switch (err.code) {
+      case 'EPERM':
+        return {
+          error: { code: 401, message: 'No permission to file access' },
+        };
+      case 'ENOENT':
+        return { error: { code: 404, message: 'File not found' } };
+      case 'EBUSY':
+        return { error: { code: 409, message: 'File is already being used' } };
+      default:
+        console.log(err);
+    }
   }
 }
 

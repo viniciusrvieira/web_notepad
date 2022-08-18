@@ -63,11 +63,11 @@ section {
   overflow-x: hidden;
   word-break: break-word;
 }
-.folder {
+.file {
   padding: 5px;
 }
-.folder:hover,
-.folder:hover i {
+.file:hover,
+.file:hover i {
   cursor: pointer;
   color: white;
   background-color: #9b9b9b;
