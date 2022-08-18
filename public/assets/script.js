@@ -1,34 +1,34 @@
-var actualFolder = '';
+var actualFile = '';
 
 $(document).ready(() => {
   $.get('/api?url=/')
-    .then((content) => {
-      content.data.forEach((folder) => {
-        addFolderToNav(folder);
+    .then((response) => {
+      response.data.content.forEach((file) => {
+        addFileToNav(file);
       });
     })
     .catch((err) => {
       alert(err);
     });
-  $(document).on('click', '.folder', (event) => {
-    if (!actualFolder) actualFolder = window.location.pathname;
-    const folder = $(event.target).text().trim();
+  $(document).on('click', '.file', (event) => {
+    const file = $(event.target).text().trim();
+    if (!actualFile) actualFile = window.location.pathname;
     if (event.target.id == 'back') {
-      let folderPath = actualFolder.slice(0, actualFolder.lastIndexOf('/'));
-      if (!folderPath) folderPath = '/';
+      let filePath = actualFile.slice(0, actualFile.lastIndexOf('/'));
+      if (!filePath) filePath = '/';
       $('#file').css('display', 'none');
-      $.get(`/api?url=${folderPath}`)
-        .then((res) => {
-          actualFolder = folderPath;
+      $.get(`/api?url=${filePath}`)
+        .then((response) => {
+          actualFile = filePath;
           $('#navigation').text('');
-          if (actualFolder && actualFolder != '/') {
+          if (actualFile && actualFile != '/') {
             addBackButtonToNav();
           }
-          res.data.forEach((folder) => {
-            addFolderToNav(folder);
+          response.data.content.forEach((file) => {
+            addFileToNav(file);
           });
         })
-        .catch((err) => {
+        .catch(() => {
           Swal.fire({
             icon: 'error',
             title: 'Ops...',
@@ -36,44 +36,55 @@ $(document).ready(() => {
           });
         });
     } else {
-      $.get(`/api?url=${actualFolder}/${folder}`)
-        .then((res) => {
-          if (res.type == 'files') {
-            closeFile();
-            actualFolder =
-              actualFolder == '/'
-                ? `${actualFolder}${folder}`
-                : `${actualFolder}/${folder}`;
-            $('#navigation').text('');
-            if (actualFolder && actualFolder != '/') {
-              addBackButtonToNav();
+      $.get(`/api?url=${actualFile}/${file}`)
+        .then((response) => {
+          if (response.data) {
+            switch (response.data.kind) {
+              case 'files':
+                closeFile();
+                actualFile =
+                  actualFile == '/'
+                    ? `${actualFile}${file}`
+                    : `${actualFile}/${file}`;
+                $('#navigation').text('');
+                if (actualFile && actualFile != '/') {
+                  addBackButtonToNav();
+                }
+                response.data.content.forEach((file) => {
+                  addFileToNav(file);
+                });
+                break;
+              case 'text':
+                openFile({ name: file, content: response.data.content });
+                break;
             }
-            res.data.forEach((folder) => {
-              addFolderToNav(folder);
-            });
-          } else if (res.type == 'text') {
-            openFile({ name: folder, content: res.data });
-          } else if (res.code == 401) {
-            Swal.fire({
-              icon: 'error',
-              title: 'Não autorizado',
-              text: 'O acesso ao diretório requisitado não foi permitido.',
-            });
-          } else if (res.code == 404) {
-            Swal.fire({
-              icon: 'error',
-              title: 'Não encontrado',
-              text: 'O diretório que você tentou acessar não existe.',
-            });
-          } else if (res.code == 409) {
-            Swal.fire({
-              icon: 'error',
-              title: 'Ocupado',
-              text: 'O diretório que você tentou acessar já está em uso.',
-            });
+          } else if (response.error) {
+            switch (response.error.code) {
+              case 401:
+                Swal.fire({
+                  icon: 'error',
+                  title: 'Não autorizado',
+                  text: 'O acesso ao diretório requisitado não foi permitido.',
+                });
+                break;
+              case 404:
+                Swal.fire({
+                  icon: 'error',
+                  title: 'Não encontrado',
+                  text: 'O diretório que você tentou acessar não existe.',
+                });
+                break;
+              case 409:
+                Swal.fire({
+                  icon: 'error',
+                  title: 'Ocupado',
+                  text: 'O diretório que você tentou acessar já está em uso.',
+                });
+                break;
+            }
           }
         })
-        .catch((err) => {
+        .catch(() => {
           Swal.fire({
             icon: 'error',
             title: 'Ops...',

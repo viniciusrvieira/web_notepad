@@ -1,11 +1,11 @@
-function addFolderToNav(folder) {
+function addFileToNav(file) {
   $('#navigation').append(
-    `<div class='folder'>
-        <i class="fa-solid fa-folder"></i>${folder}\n</div>`
+    `<div class='file'>
+        <i class="fa-solid fa-file"></i>${file}\n</div>`
   );
 }
 function addBackButtonToNav() {
-  $('#navigation').append(`<div class='folder' id='back'>
+  $('#navigation').append(`<div class='file' id='back'>
   <i class="fa-solid fa-ellipsis"></i></div>`);
 }
 function openFile(file) {
