@@ -7,8 +7,12 @@ $(document).ready(() => {
         addFileToNav(file);
       });
     })
-    .catch((err) => {
-      alert(err);
+    .catch(() => {
+      Swal.fire({
+        icon: 'error',
+        title: 'Ops...',
+        text: 'Ocorreu um erro interno, tente recarregar a página.',
+      });
     });
   $(document).on('click', '.file', (event) => {
     const file = $(event.target).text().trim();
