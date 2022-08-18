@@ -14,7 +14,23 @@ function readPath(path) {
     return {
       data: {
         kind: 'files',
-        content: fs.readdirSync(path),
+        items: fs.readdirSync(path).map((file) => {
+          try {
+            let stat = fs.lstatSync(decodeURI(`${path}/${file}`));
+            if (stat.isFile()) return { kind: 'file', name: file };
+            if (stat.isDirectory()) return { kind: 'folder', name: file };
+            return { kind: 'unknown', name: file };
+          } catch (err) {
+            switch (err.code) {
+              case 'EPERM':
+                return { kind: 'restricted_file', name: file };
+              case 'EBUSY':
+                return { kind: 'busy_file', name: file };
+              default:
+                return err;
+            }
+          }
+        }),
       },
     };
   } catch (err) {
