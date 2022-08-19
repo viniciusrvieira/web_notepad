@@ -18,6 +18,23 @@ section {
   width: 100vw;
   justify-content: space-between;
 }
+#navigation {
+  flex: 1 1 auto;
+  display: flex;
+  flex-direction: column;
+  background-color: #f2f2f2;
+}
+#file {
+  flex: 1 1 auto;
+  flex-direction: column;
+  background-color: lightgray;
+  word-wrap: break-word;
+}
+@media (max-width: 5000px) {
+  section {
+    flex-direction: column;
+  }
+}
 ::-webkit-scrollbar {
   width: 12px;
   background-color: transparent;
@@ -29,35 +46,25 @@ section {
 .fa-solid {
   margin-right: 10px;
 }
-#navigation {
-  display: flex;
-  flex-direction: column;
-  width: 100%;
-  background-color: #f2f2f2;
-}
-#file {
-  display: none;
-  flex-direction: column;
-  width: 100%;
-  background-color: lightgray;
-}
 #header {
   background-color: white;
   padding: 4px 12px;
   display: flex;
   justify-content: space-between;
   align-items: center;
+  word-break: break-word;
 }
 #navigation-header {
-  background-color: white;
   padding: 8px 16px;
   display: flex;
   justify-content: flex-start;
   align-items: center;
+  border-bottom: 1px solid #4b4b4b;
+  word-break: break-word;
 }
 #close {
-  height: 16px;
-  width: 16px;
+  min-height: 16px;
+  min-width: 16px;
   background-color: var(--red);
   border-radius: 50%;
   transition: 250ms;
@@ -67,7 +74,6 @@ section {
   cursor: pointer;
 }
 #content {
-  height: 100%;
   padding: 20px;
   overflow: scroll;
   overflow-x: hidden;
@@ -102,6 +108,7 @@ section {
   font-weight: 500;
   text-align: center;
   margin-right: 8px;
+  flex-shrink: 0;
 }
 #disk i {
   color: white;
