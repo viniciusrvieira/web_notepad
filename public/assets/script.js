@@ -16,9 +16,9 @@ $(document).ready(() => {
       });
     });
   $(document).on('click', '.file', (event) => {
-    const file = $(event.target).text().trim();
+    const file = $(event.currentTarget).text().trim();
     if (!actualFile) actualFile = window.location.pathname;
-    if (event.target.id == 'back') {
+    if (event.currentTarget.id == 'back') {
       let filePath = actualFile.slice(0, actualFile.lastIndexOf('/'));
       if (!filePath) filePath = '/';
       $('#file').css('display', 'none');
@@ -42,6 +42,7 @@ $(document).ready(() => {
           });
         });
     } else {
+      console.log(event);
       let url = actualFile == '/' ? `/${file}` : `${actualFile}/${file}`;
       $.get(`/api?url=${url}`)
         .then((response) => {
