@@ -27,4 +27,4 @@ Currently it's opening for someone that want something similar to use.
 
 ### License
 
-Copyright © 2022, [Vinícius R. Vieira](github.com/viniciusrvieira). Released under the [MIT License](/LICENSE).
+Copyright © 2022, [Vinícius R. Vieira](https://github.com/viniciusrvieira). Released under the [MIT License](/LICENSE).
