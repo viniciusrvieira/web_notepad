@@ -1,4 +1,4 @@
-# <img src="public/assets/web_notepad.svg" width="100" /> Web Notepad
+# <img style="text-align: center" src="public/assets/web_notepad.svg" width="150" /> Web Notepad
 
 This application was made with the intention to study Front-End and Back-End, focusing on API.
 
