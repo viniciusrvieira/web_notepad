@@ -2,9 +2,9 @@
 
 ## Web Notepad
 
-This application was made with the intention to study Front-End and Back-End, focusing on API.
+This application was made with the purpose to study Front-End and Back-End, focusing on API.
 
-Currently it's opening for someone that want something similar to use.
+Currently it's public for people that needs something similar to use.
 
 ### Features
 
