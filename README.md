@@ -24,3 +24,7 @@ Currently it's opening for someone that want something similar to use.
 4. Open your browser and enter the following URL: `localhost:3000`
 
 > At the moment, application runs on **PORT 3000**, but you can change in `src/index.js` file.
+
+### License
+
+Copyright © 2022, [Vinícius R. Vieira](github.com/viniciusrvieira). Released under the [MIT License](/LICENSE).
