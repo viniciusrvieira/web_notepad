@@ -42,7 +42,6 @@ $(document).ready(() => {
           });
         });
     } else {
-      console.log(event);
       let url = actualFile == '/' ? `/${file}` : `${actualFile}/${file}`;
       $.get(`/api?url=${url}`)
         .then((response) => {
@@ -101,6 +100,21 @@ $(document).ready(() => {
           });
         });
     }
+  });
+  $('#save button').on('click', () => {
+    const newContent = $('#content').text();
+    const path = $('#path').text() == '/' ? '' : $('#path').text();
+    const filename = $('#filename').text();
+    $.ajax({
+      type: 'PATCH',
+      url: `/api?url=${path}/${filename}&text=${newContent}`,
+    })
+      .then((res) => {
+        console.log(res);
+      })
+      .catch((err) => {
+        alert(err);
+      });
   });
   $('#close').on('click', () => {
     closeFile();

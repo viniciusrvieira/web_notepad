@@ -76,6 +76,19 @@ section {
   border: solid 1.5px darkred;
   cursor: pointer;
 }
+#save {
+  padding: 20px;
+  display: flex;
+  justify-content: center;
+}
+#save button {
+  border: none;
+  border-radius: 40px;
+  padding: 0.5rem 2rem;
+  background: green;
+  color: white;
+  font-weight: 500;
+}
 #content {
   padding: 20px;
   overflow: scroll;

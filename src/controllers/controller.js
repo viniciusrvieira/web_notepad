@@ -11,5 +11,9 @@ function readPath(req, res) {
       .send(builder.build(pathContent));
   res.set('Content-Type', 'application/json').send(pathContent);
 }
+function updatePath(req, res) {
+  const { query } = req;
+  console.log(query);
+}
 
-module.exports = { readPath };
+module.exports = { readPath, updatePath };
