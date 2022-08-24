@@ -147,8 +147,9 @@ section {
   word-break: break-word;
 }
 .file {
-  padding: 5px;
-  border-radius: 40px;
+  shape-outside: border-box;
+  padding: 8px;
+  border-radius: 20px;
 }
 .file:hover,
 .file:hover i {
