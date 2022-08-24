@@ -2,6 +2,8 @@
 
 :root {
   --red: #ff605c;
+  --yellow: #ffbd44;
+  --green: #00ca4e;
   --main-font: 'Poppins';
 }
 * {
@@ -85,9 +87,12 @@ section {
   border: none;
   border-radius: 40px;
   padding: 0.5rem 2rem;
-  background: green;
+  background: var(--green);
   color: white;
   font-weight: 500;
+}
+#save button:hover {
+  background-image: linear-gradient(rgba(0, 0, 0, 0.1), rgba(0, 0, 0, 0.1));
 }
 #content {
   padding: 20px;
@@ -130,4 +135,9 @@ section {
   color: white;
   margin: 0;
   width: 20px;
+}
+
+.colored-toast.swal2-icon-success {
+  background-color: #00ca4e !important;
+  color: white;
 }

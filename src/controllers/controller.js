@@ -13,7 +13,9 @@ function readPath(req, res) {
 }
 function updatePath(req, res) {
   const { query } = req;
-  console.log(query);
+  res
+    .set('Content-Type', 'application/json')
+    .send(service.updatePath(query.url, query.text));
 }
 
 module.exports = { readPath, updatePath };

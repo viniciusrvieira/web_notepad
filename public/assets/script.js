@@ -109,11 +109,51 @@ $(document).ready(() => {
       type: 'PATCH',
       url: `/api?url=${path}/${filename}&text=${newContent}`,
     })
-      .then((res) => {
-        console.log(res);
+      .then((response) => {
+        if (response.data) {
+          Swal.mixin({
+            toast: true,
+            position: 'bottom-right',
+            iconColor: 'white',
+            customClass: {
+              popup: 'colored-toast',
+            },
+            showConfirmButton: false,
+            timer: 1500,
+            timerProgressBar: true,
+          }).fire({ icon: 'success', title: 'Arquivo alterado com sucesso!' });
+        } else if (response.error) {
+          switch (response.error.code) {
+            case 401:
+              Swal.fire({
+                icon: 'error',
+                title: 'Não autorizado',
+                text: 'Você não tem permissão para alterar esse arquivo.',
+              });
+              break;
+            case 404:
+              Swal.fire({
+                icon: 'error',
+                title: 'Não encontrado',
+                text: 'O arquivo que você tentou alterar não existe.',
+              });
+              break;
+            case 409:
+              Swal.fire({
+                icon: 'error',
+                title: 'Ocupado',
+                text: 'O arquivo que você tentou alterar está em uso.',
+              });
+              break;
+          }
+        }
       })
-      .catch((err) => {
-        alert(err);
+      .catch(() => {
+        Swal.fire({
+          icon: 'error',
+          title: 'Ops...',
+          text: 'Ocorreu um erro interno, tente recarregar a página.',
+        });
       });
   });
   $('#close').on('click', () => {

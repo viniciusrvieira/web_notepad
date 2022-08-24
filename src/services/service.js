@@ -48,4 +48,23 @@ function readPath(path) {
     }
   }
 }
-module.exports = { readPath };
+function updatePath(url, text) {
+  try {
+    fs.writeFileSync(url, text, 'utf8');
+    return { data: { message: 'Successfully updated!' } };
+  } catch (err) {
+    switch (err.code) {
+      case 'EPERM':
+        return {
+          error: { code: 401, message: 'No permission to file access' },
+        };
+      case 'ENOENT':
+        return { error: { code: 404, message: 'File not found' } };
+      case 'EBUSY':
+        return { error: { code: 409, message: 'File is already being used' } };
+      default:
+        console.log(err);
+    }
+  }
+}
+module.exports = { readPath, updatePath };
