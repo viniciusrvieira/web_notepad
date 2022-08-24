@@ -1,10 +1,10 @@
-@import url('https://fonts.googleapis.com/css2?family=Poppins:ital,wght@0,100;0,200;0,300;0,400;0,500;0,600;0,700;0,800;0,900;1,100;1,200;1,300;1,400;1,500;1,600;1,700;1,800;1,900&display=swap');
+@import url("https://fonts.googleapis.com/css2?family=Poppins:ital,wght@0,100;0,200;0,300;0,400;0,500;0,600;0,700;0,800;0,900;1,100;1,200;1,300;1,400;1,500;1,600;1,700;1,800;1,900&display=swap");
 
 :root {
   --red: #ff605c;
   --yellow: #ffbd44;
   --green: #00ca4e;
-  --main-font: 'Poppins';
+  --main-font: "Poppins";
 }
 * {
   font-family: var(--main-font);
@@ -26,6 +26,7 @@ section {
   max-height: 100%;
   min-height: 50%;
   width: 100%;
+  flex: 1 1 auto;
 }
 #file {
   display: none;
@@ -84,6 +85,7 @@ section {
   padding: 20px;
   display: flex;
   justify-content: center;
+  margin-top: auto;
 }
 #save button {
   border: none;
@@ -145,6 +147,7 @@ section {
   overflow: scroll;
   overflow-x: hidden;
   word-break: break-word;
+  height: 100%;
 }
 .file {
   shape-outside: border-box;
