@@ -64,7 +64,9 @@ section {
   display: flex;
   justify-content: flex-start;
   align-items: center;
-  border-bottom: 1px solid #4b4b4b;
+  border-radius: 40px;
+  margin: 12px;
+  border: 1px solid #4b4b4b;
   word-break: break-word;
 }
 #close {
@@ -94,6 +96,44 @@ section {
 #save button:hover {
   background-image: linear-gradient(rgba(0, 0, 0, 0.1), rgba(0, 0, 0, 0.1));
 }
+#navigation-functions {
+  display: flex;
+  align-items: center;
+  justify-content: start;
+  padding: 6px 12px;
+  background-color: #4b4b4b;
+}
+#add-file,
+#add-folder {
+  background-color: transparent;
+  border: 2px solid white;
+  border-radius: 100%;
+  width: 35px;
+  height: 35px;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  margin: 2px;
+  padding: 17px;
+  transition: 250ms ease-in-out;
+}
+#add-file i,
+#add-folder i {
+  font-size: 16px;
+  color: white;
+  margin: 0;
+  transition: 250ms ease-in-out;
+}
+
+#add-file:hover,
+#add-folder:hover {
+  cursor: pointer;
+  background-color: white;
+}
+#add-file:hover i,
+#add-folder:hover i {
+  color: #4b4b4b;
+}
 #content {
   padding: 20px;
   overflow: scroll;
@@ -108,11 +148,14 @@ section {
 }
 .file {
   padding: 5px;
+  border-radius: 40px;
 }
 .file:hover,
 .file:hover i {
   cursor: pointer;
   color: white;
+}
+.file:hover {
   background-color: #9b9b9b;
 }
 .swal2-confirm {
