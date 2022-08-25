@@ -1,8 +1,10 @@
+import { Stats } from 'fs';
+
 const fs = require('fs');
 
-function readPath(path) {
+function readPath(path: string): Object {
   try {
-    let stat = fs.lstatSync(decodeURI(path));
+    let stat: Stats = fs.lstatSync(decodeURI(path));
     if (stat.isFile())
       return {
         data: {
@@ -14,13 +16,13 @@ function readPath(path) {
     return {
       data: {
         kind: 'files',
-        items: fs.readdirSync(path).map((file) => {
+        items: fs.readdirSync(path).map((file: string) => {
           try {
-            let stat = fs.lstatSync(decodeURI(`${path}/${file}`));
+            let stat: Stats = fs.lstatSync(decodeURI(`${path}/${file}`));
             if (stat.isFile()) return { kind: 'file', name: file };
             if (stat.isDirectory()) return { kind: 'folder', name: file };
             return { kind: 'unknown', name: file };
-          } catch (err) {
+          } catch (err: any) {
             switch (err.code) {
               case 'EPERM':
                 return { kind: 'restricted_file', name: file };
@@ -33,7 +35,7 @@ function readPath(path) {
         }),
       },
     };
-  } catch (err) {
+  } catch (err: any) {
     switch (err.code) {
       case 'EPERM':
         return {
@@ -45,14 +47,15 @@ function readPath(path) {
         return { error: { code: 409, message: 'File is already being used' } };
       default:
         console.log(err);
+        return err;
     }
   }
 }
-function updatePath(url, text) {
+function updatePath(url: string, text: string): Object {
   try {
     fs.writeFileSync(url, text, 'utf8');
     return { data: { message: 'Successfully updated!' } };
-  } catch (err) {
+  } catch (err: any) {
     switch (err.code) {
       case 'EPERM':
         return {
@@ -64,6 +67,7 @@ function updatePath(url, text) {
         return { error: { code: 409, message: 'File is already being used' } };
       default:
         console.log(err);
+        return err;
     }
   }
 }
