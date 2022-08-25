@@ -159,4 +159,21 @@ $(document).ready(() => {
   $('#close').on('click', () => {
     closeFile();
   });
+  $('#add-file, #add-folder').on('click', (event) => {
+    const fieldType = event.currentTarget.id;
+    const currentFieldType = $('#add-file-field').attr('action');
+    const fieldIsVisible = $('#add-file-field').is(':visible');
+    $('#add-file-field input').attr(
+      'placeholder',
+      fieldType == 'add-file' ? 'Nome do arquivo' : 'Nome da pasta'
+    );
+    if (fieldIsVisible && currentFieldType != fieldType)
+      return $('#add-file-field')
+        .attr('action', fieldType)
+        .children('input')
+        .val('');
+    if (fieldIsVisible) $('#add-file-field input').val('');
+    $('#add-file-field').toggle();
+    $('#add-file-field').attr('action', fieldType);
+  });
 });
