@@ -20,4 +20,15 @@ function updatePath(req: Request, res: Response) {
     .send(service.updatePath(query.url, query.text));
 }
 
-module.exports = { readPath, updatePath };
+function createFile(req: Request, res: Response) {
+  const { query } = req;
+  const response: Object = service.createFile(query.url, query.name);
+  res.send(response);
+}
+function createFolder(req: Request, res: Response) {
+  const { query } = req;
+  const response: Object = service.createFolder(query.url, query.name);
+  res.send(response);
+}
+
+module.exports = { readPath, updatePath, createFile, createFolder };

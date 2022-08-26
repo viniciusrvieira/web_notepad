@@ -55,7 +55,7 @@ function addBackButtonToNav() {
   <i class="fa-solid fa-ellipsis"></i></div>`);
 }
 function openFile(file) {
-  if (!file.name || !file.content) return Swal.fire('Error opening file');
+  if (!file.name) return Swal.fire('Error opening file');
   $('#file').css('display', 'flex');
   $('#file #filename').text(file.name);
   $('#file #content').text('').append(file.content);

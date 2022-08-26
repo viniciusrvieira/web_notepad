@@ -18,6 +18,9 @@ $(document).ready(() => {
   $(document).on('click', '.file', (event) => {
     const file = $(event.currentTarget).text().trim();
     if (!actualFile) actualFile = window.location.pathname;
+    if ($('#add-file-field').is(':visible')) {
+      $('#add-file-field').css('display', 'none').children('input').val('');
+    }
     if (event.currentTarget.id == 'back') {
       let filePath = actualFile.slice(0, actualFile.lastIndexOf('/'));
       if (!filePath) filePath = '/';
@@ -175,5 +178,113 @@ $(document).ready(() => {
     if (fieldIsVisible) $('#add-file-field input').val('');
     $('#add-file-field').toggle();
     $('#add-file-field').attr('action', fieldType);
+  });
+  $('#add-file-confirm').on('click', () => {
+    const value = $('#add-file-field input').val();
+    const action = $('#add-file-field').attr('action');
+    const path = $('#path').text();
+    if (action == 'add-file') {
+      $.post(`/api/file?url=${path}&name=${value}`)
+        .then((response) => {
+          if (response.data) {
+            Swal.mixin({
+              toast: true,
+              position: 'bottom-right',
+              iconColor: 'white',
+              customClass: {
+                popup: 'colored-toast',
+              },
+              showConfirmButton: false,
+              timer: 1500,
+              timerProgressBar: true,
+            }).fire({
+              icon: 'success',
+              title: 'Arquivo criado com sucesso!',
+            });
+          } else if (response.error) {
+            switch (response.error.code) {
+              case 401:
+                Swal.fire({
+                  icon: 'error',
+                  title: 'Não autorizado',
+                  text: 'Você não tem permissão para criar o arquivo.',
+                });
+                break;
+              case 404:
+                Swal.fire({
+                  icon: 'error',
+                  title: 'Não encontrado',
+                  text: 'O diretório que você tentou criar o arquivo não existe.',
+                });
+                break;
+              case 409:
+                Swal.fire({
+                  icon: 'error',
+                  title: 'Já existente',
+                  text: 'O nome do arquivo que você tentou criar já está em uso.',
+                });
+                break;
+            }
+          }
+        })
+        .catch(() => {
+          Swal.fire({
+            icon: 'error',
+            title: 'Ops...',
+            text: 'Ocorreu um erro interno, tente recarregar a página.',
+          });
+        });
+    } else if (action == 'add-folder') {
+      $.post(`/api/folder?url=${path}&name=${value}`)
+        .then((response) => {
+          if (response.data) {
+            Swal.mixin({
+              toast: true,
+              position: 'bottom-right',
+              iconColor: 'white',
+              customClass: {
+                popup: 'colored-toast',
+              },
+              showConfirmButton: false,
+              timer: 1500,
+              timerProgressBar: true,
+            }).fire({
+              icon: 'success',
+              title: 'Pasta criada com sucesso!',
+            });
+          } else if (response.error) {
+            switch (response.error.code) {
+              case 401:
+                Swal.fire({
+                  icon: 'error',
+                  title: 'Não autorizado',
+                  text: 'Você não tem permissão para criar a pasta.',
+                });
+                break;
+              case 404:
+                Swal.fire({
+                  icon: 'error',
+                  title: 'Não encontrado',
+                  text: 'O diretório que você tentou criar a pasta não existe.',
+                });
+                break;
+              case 409:
+                Swal.fire({
+                  icon: 'error',
+                  title: 'Já existente',
+                  text: 'O nome da pasta que você tentou criar já está em uso.',
+                });
+                break;
+            }
+          }
+        })
+        .catch(() => {
+          Swal.fire({
+            icon: 'error',
+            title: 'Ops...',
+            text: 'Ocorreu um erro interno, tente recarregar a página.',
+          });
+        });
+    }
   });
 });
