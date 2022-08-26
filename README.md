@@ -10,11 +10,12 @@ Currently it's public for people that needs something similar to use.
 
 - Directory navigation
 - Read files
+- Edit file content
+- Create files/folders
 
 #### To be implemented
 
-- Create files/folders
-- Edit file content
+- SSH Access
 
 ### Quick-start
 
