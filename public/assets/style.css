@@ -36,9 +36,15 @@ section {
   min-height: 50%;
   width: 100%;
 }
-@media (max-width: 500px) {
+@media (max-width: 425px) {
   section {
     flex-direction: column;
+  }
+  #add-file-field {
+    flex-direction: column;
+  }
+  #add-file-field input {
+    margin-bottom: 4px;
   }
 }
 ::-webkit-scrollbar {
@@ -127,6 +133,7 @@ section {
   border-radius: 24px;
   padding: 7px 12px;
   border: none;
+  width: 100%;
 }
 #add-file-confirm {
   border: none;

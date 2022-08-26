@@ -176,7 +176,7 @@ $(document).ready(() => {
         .children('input')
         .val('');
     if (fieldIsVisible) $('#add-file-field input').val('');
-    $('#add-file-field').toggle();
+    $('#add-file-field').toggleClass('d-flex');
     $('#add-file-field').attr('action', fieldType);
   });
   $('#add-file-confirm').on('click', () => {
