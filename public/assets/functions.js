@@ -65,3 +65,20 @@ function closeFile() {
   $('#file #filename').text('');
   $('#file #content').text('');
 }
+function updateNav(url) {
+  $('#navigation-content').text('');
+  $.get(`/api?url=${url}`)
+    .then((response) => {
+      if (url != '/') addBackButtonToNav();
+      response.data.items.forEach((file) => {
+        addItemToNav(file);
+      });
+    })
+    .catch(() => {
+      Swal.fire({
+        icon: 'error',
+        title: 'Ops...',
+        text: 'Ocorreu um erro interno, tente recarregar a página.',
+      });
+    });
+}

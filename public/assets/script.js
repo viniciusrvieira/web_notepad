@@ -187,6 +187,7 @@ $(document).ready(() => {
       $.post(`/api/file?url=${path}&name=${value}`)
         .then((response) => {
           if (response.data) {
+            updateNav(path);
             Swal.mixin({
               toast: true,
               position: 'bottom-right',
@@ -238,6 +239,7 @@ $(document).ready(() => {
       $.post(`/api/folder?url=${path}&name=${value}`)
         .then((response) => {
           if (response.data) {
+            updateNav(path);
             Swal.mixin({
               toast: true,
               position: 'bottom-right',
