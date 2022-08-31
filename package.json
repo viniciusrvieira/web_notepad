@@ -1,6 +1,7 @@
 {
-  "name": "web_notepad_react",
-  "version": "0.2.1",
+  "name": "web_notepad",
+  "version": "0.3.0-beta",
+  "description": "A notepad web version.",
   "private": true,
   "dependencies": {
     "@testing-library/jest-dom": "^5.16.5",
@@ -8,20 +9,24 @@
     "@testing-library/user-event": "^13.5.0",
     "react": "^18.2.0",
     "react-dom": "^18.2.0",
+    "react-scripts": "5.0.1",
     "sweetalert2": "^11.4.29",
     "sweetalert2-react-content": "^5.0.3",
     "web-vitals": "^2.1.4"
   },
-  "devDependencies": {
-    "react-scripts": "^5.0.1"
-  },
   "scripts": {
     "app": "concurrently \"npm run react\" \"npm run api\"",
     "react": "react-scripts start",
-    "api": "cd ../web_notepad_api/ && npm start",
-    "build": "react-scripts build",
-    "test": "react-scripts test",
-    "eject": "react-scripts eject"
+    "api": "cd ../web_notepad_api/ && npm start"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/viniciusrvieira/web_notepad.git"
+  },
+  "author": "Vinícius R. Vieira",
+  "license": "MIT",
+  "bugs": {
+    "url": "https://github.com/viniciusrvieira/web_notepad/issues"
   },
   "eslintConfig": {
     "extends": [
