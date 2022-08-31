@@ -2,7 +2,7 @@
 
 ## Web Notepad
 
-This application was made with the purpose to study Front-End and Back-End, focusing on API.
+This application was made with the purpose to study Front-End, focusing on ReactJS.
 
 ### Technologies
 
@@ -28,7 +28,7 @@ Currently it's public for people that needs something similar to use.
 
 This Application needs [Web Notepad API](https://github.com/viniciusrvieira/web_notepad_api) to run
 
-1. Create a directory
+1. Create a root directory
 2. Clone this repository and [Web Notepad API](https://github.com/viniciusrvieira/web_notepad_api) to the same directory
 3. Use the following commands:
 
@@ -36,14 +36,10 @@ This Application needs [Web Notepad API](https://github.com/viniciusrvieira/web_
   Access **Web Notepad API** folder.
 - `npm i`
   Install all **Web Notepad API** dependencies.
-- `npm i ts-node nodemon`
-  Install ts-node and nodemon for **Web Notepad API** running.
 - `cd ../web_notepad`
   Access **Web Notepad** folder
 - `npm i`
   Install all **Web Notepad** dependencies.
-- `npm i concurrently`
-  Install ts-node and nodemon for **Web Notepad** running.
 - `npm run app`
   Run with **concurrently**(npm module) both _Web Notepad_ and _Web Notepad API_
 
